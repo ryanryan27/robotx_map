@@ -166,7 +166,7 @@ class HeartBeat:
         self.data[name]=value
 
     def startMessage(self,packetId):
-        self.message=packetIdself.addre
+        self.message=packetId
         #self.addComponentToMessage(HeartBeat.TEAMNAME,comma=False)
 
     def addComponentToMessage(self,component,comma=True):
@@ -195,20 +195,13 @@ class HeartBeat:
 
     def updateTask(self,msg):        
         #change msg.something to appropriate message variable
-
         self.currentTask = msg.currentTask
 
     def updateSystemMode(self,msg):
         #this dictionary mapping will need to change when subcribed to the new estop kill system   
-        if (msg.estop_state == 1):
-            self.data['system_mode'] = 3
-        elif (msg.estop_state == 2 or msg.estop_state == 3):
-            self.data['system_mode'] = 1
-        elif (msg.estop_state == 4):
-            self.data['system_mode'] = 2
-        else:
-            self.data['system_mode'] = 0
-        # self.data['system_mode'] = msg.estop_st   ate
+        SYSTEM_MODE = {msg.MANUAL:1, msg.MANUAL_ASSIST:1, msg.AUTO:2, msg.STOP:3, msg.LINKLOSS:0}
+                      
+        self.data['system_mode'] = SYSTEM_MODE[msg.estop_state]
 
     def updateEntranceGate(self,msg):
         #change msg.something to appropriate message variable
@@ -281,4 +274,3 @@ if __name__ == '__main__':
     heartbeat.main()
 
 
-s
