@@ -84,10 +84,15 @@ def drawIcons(gui, window):
 
         if icon.id == None:
             icon.id = window['bg'].draw_image(icon.filename, location=(x-offsetx,y-offsety))
+            icon.textid = window['bg'].draw_text(icon.name, location=(x,y-20), font="mono", color="white")
         else:
             newid = window['bg'].draw_image(icon.filename, location=(x-offsetx,y-offsety))
+            newtextid = window['bg'].draw_text(icon.name, location=(x,y-20), font="mono", color="white")
             window['bg'].delete_figure(icon.id)
+            window['bg'].delete_figure(icon.textid)
             icon.id = newid
+            icon.textid = newtextid
+        window['bg'].Widget.scale(icon.id, x-offsetx, y-offsety, 0.1, 0.1)
 
 
 def async_updates(gui, window):
@@ -102,8 +107,8 @@ def test_heartbeats(gui):
     while True:
 
         time.sleep(1)
-        
-        gui.updateFromMessage("flnd", -33.720777, 150.672182, random.randint(1,3), time.time())    
+        gui.updateFromMessage("TEST", -33.720358, 150.670717, random.randint(0,3), time.time())
+        gui.updateFromMessage("FLND", -33.720777, 150.672182, random.randint(0,3), time.time())
 
 
 def start_gui():

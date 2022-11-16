@@ -6,6 +6,7 @@ class Icon:
     def __init__(self, type="wamv", name="unknown", lat = None, lon = None, time=time.time()):
         self.type = type
         self.id = None
+        self.textid = None
         self.lat = lat
         self.lon = lon
         self.name=name
@@ -17,6 +18,7 @@ class Icon:
             im = Image.open(self.filename)
             self.width, self.height = im.size
             im.close()
+            
         else:
             self.width = 20
             self.height = 20
