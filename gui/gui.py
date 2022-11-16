@@ -70,6 +70,10 @@ class GUI:
             newIcon.setState(state)
             self.icons.append(newIcon)
 
+def removeIcon(gui, window, icon):
+    window['bg'].delete_figure(icon.id)
+    window['bg'].delete_figure(icon.textid)
+    gui.icons.remove(icon)
 
 def drawIcons(gui, window):
     for icon in gui.icons:
@@ -77,6 +81,11 @@ def drawIcons(gui, window):
         
         if time.time() - icon.timestamp > int(gui.settings["timeout"]):
             icon.setState(0)
+
+
+        if time.time() - icon.timestamp > int(gui.settings["timeoutRemove"]):
+            removeIcon(gui, window, icon)
+            continue
         
 
         offsetx = icon.width/2
@@ -106,9 +115,11 @@ def async_updates(gui, window):
 def test_heartbeats(gui):
     while True:
 
-        time.sleep(1)
+        
         gui.updateFromMessage("TEST", -33.720358, 150.670717, random.randint(0,3), time.time())
         gui.updateFromMessage("FLND", -33.720777, 150.672182, random.randint(0,3), time.time())
+
+        time.sleep(1)
 
 
 def start_gui():
